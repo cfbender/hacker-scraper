@@ -9,7 +9,7 @@ function Header({ user, loading }) {
         </Link>
         {!loading &&
           (user ? (
-            <div>
+            <div className="links">
               <Link href="/saved">
                 <a id="saved">Saved Articles</a>
               </Link>
@@ -50,6 +50,22 @@ function Header({ user, loading }) {
 
         #saved {
           margin-right: 3rem;
+        }
+
+        @media only screen and (max-width: 600px) {
+          #logo {
+            font-size: 16px;
+          }
+          #saved {
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+          }
+          .links {
+            margin-left: 0.5rem;
+            display: flex;
+            font-size: 12px;
+            flex-direction: column;
+          }
         }
       `}</style>
     </header>
