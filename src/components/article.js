@@ -48,11 +48,11 @@ const Article = props => {
             display: flex;
             flex-direction: column;
             max-width: 60rem;
-            min-width: 42rem;
             min-height: 4rem;
-            -webkit-box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.75);
-            -moz-box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.75);
-            box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.75);
+            margin: 0.3rem;
+            -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
+            box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
           }
           .title {
             padding: 10px;
