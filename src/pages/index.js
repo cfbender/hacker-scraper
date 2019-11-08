@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import fetch from "isomorphic-unfetch";
 
 import Layout from "../components/layout";
 import { useFetchUser } from "../lib/user";
@@ -7,16 +8,7 @@ import Article from "../components/article";
 
 function Home() {
   const { user, loading } = useFetchUser();
-  const [articles, updateArticles] = useState({
-    "0": {
-      id: 0,
-      title: "NASA Flew Gas Detectors Above California, Found ‘Super Emitters’",
-      link:
-        "https://www.bloomberg.com/news/articles/2019-11-06/nasa-flew-gas-detectors-above-california-found-super-emitters",
-      commentLink: "https://news.ycombinator.com/item?id=21482937",
-      liked: false
-    }
-  });
+  const [articles, updateArticles] = useState({});
 
   function toggleLiked(id) {
     let newArticles = { ...articles };
@@ -24,19 +16,31 @@ function Home() {
     updateArticles(newArticles);
   }
 
+  useEffect(() => {
+    const scrape = async () => {
+      const data = await fetch("/api/scrape");
+      return data.json();
+    };
+
+    scrape().then(data => updateArticles(data));
+  }, []);
   return (
     <Layout user={user} loading={loading}>
       {loading && <p>Loading articles...</p>}
-      {!loading && (
-        <Article
-          id={articles[0].id}
-          title={articles[0].title}
-          link={articles[0].link}
-          commentLink={articles[0].commentLink}
-          toggleLiked={toggleLiked}
-          user={user}
-        ></Article>
-      )}
+      {!user && <p>Login to save articles and store notes!</p>}
+      {!loading &&
+        Object.keys(articles).map(prop => (
+          <Article
+            key={articles[prop].id}
+            id={prop}
+            postId={articles[prop].id}
+            title={articles[prop].title}
+            link={articles[prop].link}
+            commentLink={articles[prop].commentLink}
+            toggleLiked={toggleLiked}
+            user={user}
+          ></Article>
+        ))}
     </Layout>
   );
 }
