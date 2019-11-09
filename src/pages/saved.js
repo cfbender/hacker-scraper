@@ -41,6 +41,12 @@ function SavedArticles({ user }) {
 
   return (
     <>
+      {!articles.length && (
+        <p>
+          Go back to the home page and like some articles to save and take
+          notes!
+        </p>
+      )}
       {articles.map(article => (
         <Article
           key={article.articleId}
