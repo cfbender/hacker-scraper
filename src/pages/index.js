@@ -38,7 +38,7 @@ function Home() {
     };
 
     checkLiked();
-  }, [user]);
+  }, [user, loading]);
 
   return (
     <Layout user={user} loading={loading}>

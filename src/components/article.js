@@ -12,7 +12,7 @@ const Article = props => {
       await fetch(`/api/data/articles`, {
         method: "PUT",
         body: JSON.stringify({
-          articleId: props.postId,
+          articleId: props.id,
           userId: props.user.sub,
           title: props.title,
           link: props.link,
@@ -24,7 +24,7 @@ const Article = props => {
       await fetch(`/api/data/articles`, {
         method: "DELETE",
         body: JSON.stringify({
-          articleId: props.postId,
+          articleId: props.id,
           userId: props.user.sub
         })
       });

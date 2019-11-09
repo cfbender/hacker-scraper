@@ -46,7 +46,7 @@ const handler = async (req, res) => {
         link: reqBody.link,
         commentLink: reqBody.commentLink
       });
-      console.log(newArticle._id);
+      console.log(`Saving article: ${reqBody.articleId}`);
       await User.findOneAndUpdate(
         { userId: reqBody.userId },
         { $push: { articles: newArticle._id } },
