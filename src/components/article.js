@@ -32,7 +32,6 @@ const Article = props => {
   }
 
   useEffect(() => {
-    console.log(props.id);
     if (props.userArticles.includes(props.id)) {
       setLiked(true);
       updateLikedText("❤️");

@@ -46,7 +46,7 @@ function SavedArticles({ user }) {
       {articles.map(article => (
         <Article
           key={article.articleId}
-          articleId={article.articleId}
+          id={article.articleId}
           title={article.title}
           link={article.link}
           commentLink={article.commentLink}
@@ -66,7 +66,7 @@ function SavedArticles({ user }) {
                   data-noteid={note._id}
                   onClick={deleteNote}
                 >
-                  🗑️
+                  Delete
                 </button>
               </div>
             ))}
@@ -92,11 +92,20 @@ function SavedArticles({ user }) {
           font-size: 10px;
         }
         .note-trash {
-          font-size: 10px;
+          color: white;
+          font-size: 12px;
+          font-family: "Ubuntu Mono", monospace;
           display: flex;
           justify-content: center;
-          padding: 0.15rem;
-          max-width: 0.5rem;
+          background-color: #333;
+          border-radius: 5px;
+          border: none;
+        }
+
+        @media only screen and (max-width: 600px) {
+          .note-time {
+            display: none;
+          }
         }
       `}</style>
     </>

@@ -6,6 +6,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "cd src && yarn dev",
-    "start": "cd src && yarn start"
+    "start": "cd src && yarn build && yarn start"
   }
 }

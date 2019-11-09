@@ -31,7 +31,6 @@ const handler = async (req, res) => {
             .populate("notes")
             .populate({ path: "notes", populate: "article" })
             .exec();
-          console.log(response);
           res.status(200).json(response);
         } catch (error) {
           console.error(error);
