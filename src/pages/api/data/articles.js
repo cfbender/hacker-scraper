@@ -67,6 +67,9 @@ const handler = async (req, res) => {
         { $pull: { articles: article._id } }
       ).exec();
 
+      res.status(200);
+      break;
+
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
