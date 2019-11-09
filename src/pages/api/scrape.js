@@ -10,25 +10,25 @@ export default async function scrape(req, res) {
     let data = {};
 
     let id = 0;
-
+    let arr = [];
     $(".athing").each(function() {
-      const postId = $(this).attr("id");
+      const articleId = $(this).attr("id");
       const title = $(this)
         .find(".storylink")
         .text();
       const link = $(this)
         .find(".storylink")
         .attr("href");
-      const commentLink = `https://news.ycombinator.com/item?id=${postId}`;
-      data[id++] = {
-        id: postId,
+      const commentLink = `https://news.ycombinator.com/item?id=${articleId}`;
+      arr.push({
+        id: articleId,
         title: title,
         link: link,
         commentLink: commentLink
-      };
+      });
     });
 
-    res.json(data);
+    res.json(arr);
   } catch (error) {
     console.error(error);
     res.status(error.status || 500).end(error.message);

@@ -1,16 +1,43 @@
 import React, { useState, useEffect } from "react";
+import fetch from "isomorphic-unfetch";
 
 const Article = props => {
-  const [liked, updateLiked] = useState("🖤");
+  const [likedText, updateLikedText] = useState("🖤");
+  const [liked, setLiked] = useState(false);
 
-  function handleToggle(e) {
-    props.toggleLiked(props.id);
-    liked === "🖤" ? updateLiked("❤️") : updateLiked("🖤");
+  async function handleToggle() {
+    likedText === "🖤" ? updateLikedText("❤️") : updateLikedText("🖤");
+    if (!liked) {
+      setLiked(true);
+      await fetch(`/api/data/articles`, {
+        method: "PUT",
+        body: JSON.stringify({
+          articleId: props.postId,
+          userId: props.user.sub,
+          title: props.title,
+          link: props.link,
+          commentLink: props.commentLink
+        })
+      });
+    } else {
+      setLiked(false);
+      await fetch(`/api/data/articles`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          articleId: props.postId,
+          userId: props.user.sub
+        })
+      });
+    }
   }
 
   useEffect(() => {
-    props.liked ? updateLiked("liked") : null;
-  }, []);
+    console.log(props.id);
+    if (props.userArticles.includes(props.id)) {
+      setLiked(true);
+      updateLikedText("❤️");
+    }
+  }, [props.userArticles]);
 
   return (
     <div className="article-container">
@@ -34,7 +61,7 @@ const Article = props => {
 
         {props.user && (
           <button className="heart" onClick={handleToggle}>
-            {liked}
+            {likedText}
           </button>
         )}
       </div>

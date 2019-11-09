@@ -8,37 +8,50 @@ import Article from "../components/article";
 
 function Home() {
   const { user, loading } = useFetchUser();
-  const [articles, updateArticles] = useState({});
-
-  function toggleLiked(id) {
-    let newArticles = { ...articles };
-    newArticles[id].liked = !newArticles[id].liked;
-    updateArticles(newArticles);
-  }
+  const [articles, updateArticles] = useState([]);
+  const [userArticles, updateUserArticles] = useState([]);
 
   useEffect(() => {
     const scrape = async () => {
-      const data = await fetch("/api/scrape");
-      return data.json();
+      const response = await fetch("/api/scrape");
+      const data = await response.json();
+      return data;
     };
 
-    scrape().then(data => updateArticles(data));
+    scrape().then(data => {
+      updateArticles(data);
+    });
   }, []);
+
+  useEffect(() => {
+    const checkLiked = async () => {
+      if (user) {
+        const response = await fetch(`/api/data/articles?userId=${user.sub}`);
+        const userArticles = await response.json();
+        const userArticleIds = userArticles.articles.map(
+          article => article.articleId
+        );
+        updateUserArticles(userArticleIds);
+      }
+    };
+
+    checkLiked();
+  }, [user]);
+
   return (
     <Layout user={user} loading={loading}>
       {loading && <p>Loading articles...</p>}
       {!user && <p>Login to save articles and store notes!</p>}
       {!loading &&
-        Object.keys(articles).map(prop => (
+        articles.map(article => (
           <Article
-            key={articles[prop].id}
-            id={prop}
-            postId={articles[prop].id}
-            title={articles[prop].title}
-            link={articles[prop].link}
-            commentLink={articles[prop].commentLink}
-            toggleLiked={toggleLiked}
+            key={article.id}
+            id={article.id}
+            title={article.title}
+            link={article.link}
+            commentLink={article.commentLink}
             user={user}
+            userArticles={userArticles}
           ></Article>
         ))}
     </Layout>
