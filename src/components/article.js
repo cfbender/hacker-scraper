@@ -44,11 +44,9 @@ const Article = props => {
         {props.title}{" "}
         <span className="domain">
           {`
-            (${
-              props.link.match(
-                /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
-              )[0]
-            })
+            (${props.link.match(
+              /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
+            )[0] || "no domain"})
 
           `}
         </span>

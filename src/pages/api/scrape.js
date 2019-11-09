@@ -7,18 +7,23 @@ export default async function scrape(req, res) {
 
     const page = await response.text();
     const $ = cheerio.load(page);
-    let data = {};
 
-    let id = 0;
     let arr = [];
     $(".athing").each(function() {
       const articleId = $(this).attr("id");
       const title = $(this)
         .find(".storylink")
         .text();
-      const link = $(this)
+      let link = $(this)
         .find(".storylink")
         .attr("href");
+
+      link = link.match(
+        /(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/
+      )
+        ? link
+        : `https://news.ycombinator.com/${link}`;
+
       const commentLink = `https://news.ycombinator.com/item?id=${articleId}`;
       arr.push({
         id: articleId,
