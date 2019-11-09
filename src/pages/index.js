@@ -11,6 +11,7 @@ function Home() {
   const [articles, updateArticles] = useState([]);
   const [userArticles, updateUserArticles] = useState([]);
 
+  // loads articles from scraper API
   useEffect(() => {
     const scrape = async () => {
       const response = await fetch("/api/scrape");
@@ -23,6 +24,7 @@ function Home() {
     });
   }, []);
 
+  // checks if any articles shown were already liked by the user and updates accordingly
   useEffect(() => {
     const checkLiked = async () => {
       if (user) {

@@ -10,22 +10,20 @@ function SavedArticles({ user }) {
   const [userArticles, updateUserArticles] = useState([]);
   const [notes, setNotes] = useState([]);
 
+  // gets user saved articles and updates
   const scrape = async () => {
     const result = await fetch(`/api/data/articles?userId=${user.sub}`);
     const data = await result.json();
     setNotes(data.notes);
     updateArticles(data.articles);
+
+    const userArticleIds = data.articles.map(article => article.articleId);
+    updateUserArticles(userArticleIds);
   };
 
+  //
   useEffect(() => {
-    scrape().then(async () => {
-      const response = await fetch(`/api/data/articles?userId=${user.sub}`);
-      const userArticles = await response.json();
-      const userArticleIds = Object.keys(userArticles).map(
-        prop => userArticles[prop].id
-      );
-      updateUserArticles(userArticleIds);
-    });
+    scrape();
   }, []);
 
   async function deleteNote(e) {
