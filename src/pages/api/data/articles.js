@@ -52,7 +52,7 @@ const handler = async (req, res) => {
         { $push: { articles: newArticle._id } },
         { new: true, upsert: true }
       ).exec();
-      res.status(200);
+      res.status(200).json({ good: true });
       break;
 
     //REMOVING ARTICLE FROM USER
@@ -67,7 +67,7 @@ const handler = async (req, res) => {
         { $pull: { articles: article._id } }
       ).exec();
 
-      res.status(200);
+      res.status(200).json({ good: true });
       break;
 
     default:
