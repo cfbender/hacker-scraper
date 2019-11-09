@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cd src && yarn dev",
     "heroku-prebuild": "cd src && yarn && yarn build",
-    "start": "cd src && yarn start"
+    "start": "cd src && yarn start -p $PORT"
   },
   "main": "index.js"
 }
