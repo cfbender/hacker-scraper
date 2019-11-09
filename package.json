@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cd src && yarn dev",
-    "heroku-prebuild": "cd src && yarn && yarn build",
+    "heroku-prebuild": "cd src && npm install -yq && npm run build",
     "start": "cd src && yarn start"
   }
 }
