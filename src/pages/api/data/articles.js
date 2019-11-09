@@ -40,12 +40,20 @@ const handler = async (req, res) => {
 
     //ADDING NEW ARTICLE TO USER
     case "PUT":
-      const newArticle = await Article.create({
-        articleId: reqBody.articleId,
-        title: reqBody.title,
-        link: reqBody.link,
-        commentLink: reqBody.commentLink
-      });
+      const newArticle = await Article.findOneAndUpdate(
+        {
+          articleId: reqBody.articleId
+        },
+        {
+          $set: {
+            articleId: reqBody.articleId,
+            title: reqBody.title,
+            link: reqBody.link,
+            commentLink: reqBody.commentLink
+          }
+        },
+        { upsert: true, new: true }
+      );
       console.log(`Saving article: ${reqBody.articleId}`);
       await User.findOneAndUpdate(
         { userId: reqBody.userId },
